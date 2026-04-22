@@ -1,6 +1,7 @@
 import { View, Text, TouchableOpacity } from 'react-native';
 import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome';
 import { faHome, faHandPointUp, faUser } from '@fortawesome/free-solid-svg-icons';
+import { Link } from 'expo-router';
 
 export default function Footer() {
     return (
@@ -28,6 +29,7 @@ export default function Footer() {
                     <FontAwesomeIcon icon={faUser} size={20} color="#F8FAFC" />
                     <Text className="mt-1 text-[12px] text-slate-100">Perfil</Text>
                 </TouchableOpacity>
+
             </View>
         </View>
     );
