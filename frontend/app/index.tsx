@@ -52,6 +52,14 @@ export default function Index() {
     { name: "Pranchetário 2", status: "Em aula", responsible: "Sônia" },
   ]
 
+  const filteredLabs = labs.filter((lab) => {
+    const isPranchetario = lab.name.toLowerCase().includes("pranchetário");
+
+    if (selectedCategory === "Todos") return true;
+    if (selectedCategory === "Laboratórios") return !isPranchetario;
+    return isPranchetario;
+  });
+
   return (
     <View className="flex-1">
     <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ paddingBottom: 40 }}>
@@ -94,7 +102,7 @@ export default function Index() {
       <View className="px-5">
         <Text className="mb-5 text-2xl font-bold color-[#F8FAFC]">Ambientes disponíveis</Text>
 
-        {labs.map((lab) => (
+        {filteredLabs.map((lab) => (
           <LabCard key={lab.name} name={lab.name} status={lab.status} responsible={lab.responsible} onPress={() => handleCardPress(lab)} />
         ))}
 
