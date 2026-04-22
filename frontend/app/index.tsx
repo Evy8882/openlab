@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Image, Text, ScrollView, View, Pressable } from "react-native";
 import LabCard from "../components/LabCard";
+import Footer from "@/components/Footer";
 const image = require("../assets/images/openlab-logo.png");
 
 export default function Index() {
@@ -31,6 +32,7 @@ export default function Index() {
   ]
 
   return (
+    <View className="flex-1">
     <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ paddingBottom: 40 }}>
 
       {/* homepage header */}
@@ -76,5 +78,7 @@ export default function Index() {
         ))}
       </View>
     </ScrollView>
+      <Footer></Footer>
+    </View>
   );
 }
