@@ -2,6 +2,7 @@ import { useState } from "react";
 import { Image, Text, ScrollView, View, Pressable } from "react-native";
 import LabCard from "../components/LabCard";
 import Footer from "@/components/Footer";
+import LabMenu from "@/components/LabMenu";
 const image = require("../assets/images/openlab-logo.png");
 
 export default function Index() {
@@ -14,21 +15,41 @@ export default function Index() {
     "Laboratórios",
     "Pranchetários",
   ];
+  const [isMenuOpened, setIsMenuOpened] = useState<boolean>(false);
+  const [menuData, setMenuData] = useState({
+    labName: "",
+    labStatus: "Disponível agora" as "Disponível agora" | "Indisponível" | "Em aula",
+    labResponsible: "",
+  });
+
+  function handleCardPress(lab: Lab) {
+    setMenuData({
+      labName: lab.name,
+      labStatus: lab.status,
+      labResponsible: lab.responsible || "",
+    });
+    setIsMenuOpened(true);
+  }
+
+  function handleCloseMenu() {
+    setIsMenuOpened(false);
+  }
 
   type LabStatus = "Disponível agora" | "Indisponível" | "Em aula";
   interface Lab {
     name: string;
     status: LabStatus;
+    responsible?: string;
   }
 
   const labs: Lab[] = [
-    { name: "Lab 1", status: "Disponível agora" },
+    { name: "Lab 1", status: "Disponível agora", responsible: "Rafael D'Angelo" },
     { name: "Lab 2", status: "Indisponível" },
-    { name: "Lab 3", status: "Em aula" },
-    { name: "Lab 4", status: "Disponível agora" },
+    { name: "Lab 3", status: "Em aula", responsible: "Iury Silva" },
+    { name: "Lab 4", status: "Disponível agora", responsible: "Fillipe" },
     { name: "Lab 5", status: "Indisponível" },
-    { name: "Pranchetário 1", status: "Disponível agora" },
-    { name: "Pranchetário 2", status: "Em aula" },
+    { name: "Pranchetário 1", status: "Disponível agora", responsible: "Everton" },
+    { name: "Pranchetário 2", status: "Em aula", responsible: "Sônia" },
   ]
 
   return (
@@ -74,11 +95,15 @@ export default function Index() {
         <Text className="mb-5 text-2xl font-bold color-[#F8FAFC]">Ambientes disponíveis</Text>
 
         {labs.map((lab) => (
-          <LabCard key={lab.name} name={lab.name} status={lab.status} />
+          <LabCard key={lab.name} name={lab.name} status={lab.status} responsible={lab.responsible} onPress={() => handleCardPress(lab)} />
         ))}
+
       </View>
+
+
     </ScrollView>
       <Footer></Footer>
+      <LabMenu opened={isMenuOpened} labName={menuData.labName} labStatus={menuData.labStatus} labResponsible={menuData.labResponsible} onClose={handleCloseMenu} />
     </View>
   );
 }
