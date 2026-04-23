@@ -23,17 +23,26 @@ export default function Login() {
       Alert.alert("Erro", "Preencha todos os campos!");
       return;
     }
-    // Simulação de login:
-    // Ainda deve ser implementado com o backend
-    const userData = {
-      nome: email.split("@")[0],
-      email,
-      tipo: "aluno",
-    };
     
-    console.log("Usuário logado:", userData);
+    const response = await fetch("http://localhost:3000/login", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json"
+      },
+      body: JSON.stringify({ email, senha })
+    });
 
-    await saveItem("user", userData);
+    
+    const data = await response.json();
+    
+    if (!response.ok) {
+      Alert.alert("Erro", data.erro || "Erro ao fazer login");
+      return;
+    }
+    console.log("Usuário logado:", data);
+
+    await saveItem("token", {token: data.token});
+    await saveItem("user", data.data);
     router.push("/");
   };
 

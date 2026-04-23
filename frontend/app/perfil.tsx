@@ -114,7 +114,7 @@ export default function Perfil() {
       </View>
 
       {/* CARD */}
-      <View className="w-full max-w-md border-[#1F2937] bg-[#111827] p-6 rounded-2xl border">
+      <View className="w-full mx-auto max-w-md border-[#1F2937] bg-[#111827] p-6 rounded-2xl border">
         <Text className="text-gray-400 mb-1">Email</Text>
 
         {editando ? (

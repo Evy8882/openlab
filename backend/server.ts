@@ -4,7 +4,9 @@ import dotenv from 'dotenv'
 import cors from 'cors'
 dotenv.config()
 
+// Importa os controladores
 import { CadastrarUsuario } from './controllers/cadastro.controller.ts'
+import { LoginUsuario } from './controllers/login.controller.ts'
 
 const app = express()
 app.use(cors())
@@ -38,10 +40,9 @@ app.get('/', (req: any, res: any) => {
 app.post('/cadastro', CadastrarUsuario)
 
 // Rota de login
-app.post('/login', async (req: any, res: any) => {
-})
+app.post('/login', LoginUsuario)
 
-// ▶️ Inicia servidor
+
 app.listen(3000, () => {
   console.log('Servidor rodando na porta 3000')
 })
