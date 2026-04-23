@@ -6,6 +6,7 @@ import {
   Image,
   TextInput,
   Alert,
+  ScrollView
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Footer from "../components/Footer";
@@ -73,7 +74,8 @@ export default function Perfil() {
   }
 
   return (
-    <View className="flex-1 bg-[#0e0e0e] items-center px-4 pt-16">
+    <View className="flex-1">
+    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 40 }}>
       {/* FOTO */}
       <TouchableOpacity onPress={escolherFoto}>
         <Image
@@ -86,26 +88,27 @@ export default function Perfil() {
             borderRadius: 60,
             borderWidth: 3,
             borderColor: "#22d3ee",
+            marginHorizontal: "auto"
           }}
         />
       </TouchableOpacity>
 
-      <Text className="text-gray-400 mt-2 mb-4">Toque para alterar foto</Text>
+      <Text className="text-gray-400 mt-2 mb-4 mx-auto">Toque para alterar foto</Text>
 
       {/* NOME */}
       {editando ? (
         <TextInput
           value={usuario.nome}
           onChangeText={(text) => setUsuario({ ...usuario, nome: text })}
-          className="text-white text-2xl font-bold border-b border-cyan-400 mb-2 text-center"
+          className="text-white mx-auto text-2xl font-bold border-b border-cyan-400 mb-2 text-center"
         />
       ) : (
-        <Text className="text-white text-2xl font-bold">{usuario.nome}</Text>
+        <Text className="text-white mx-auto text-2xl font-bold">{usuario.nome}</Text>
       )}
 
       {/* TIPO */}
-      <View className="mt-2 mb-6 px-4 py-1 rounded-full bg-cyan-500/20 border border-cyan-400">
-        <Text className="text-cyan-400 text-sm">
+      <View className="mt-2 mb-6 mx-auto px-4 py-1 rounded-full bg-cyan-500/20 border border-cyan-400">
+        <Text className="text-cyan-400 text-sm mx-auto">
           {usuario.tipo === "professor" ? "Professor / Monitor" : "Aluno"}
         </Text>
       </View>
@@ -139,7 +142,7 @@ export default function Perfil() {
           <Text className="text-center text-white font-semibold">Sair</Text>
         </TouchableOpacity>
       </View>
-
+      </ScrollView>
       <Footer />
     </View>
   );

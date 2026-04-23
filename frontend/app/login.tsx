@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ScrollView
 } from "react-native";
 import { useRouter } from "expo-router";
 import { saveItem } from "@/utils/Storage";
@@ -37,17 +38,19 @@ export default function Login() {
   };
 
   return (
-    <View className="flex-1 bg-[#0e0e0e] items-center justify-center px-4">
+    <View className="flex-1">
+    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 20 }}>
 
       {/* Logo */}
       <Image
         source={require("../assets/images/openlab-logo.png")}
         style={{ width: 220, height: 80 }}
+        className="mx-auto"
         resizeMode="contain"
       />
 
       {/* Card */}
-      <View className="w-full max-w-md border-[#1F2937] bg-[#111827] mt-10 p-6 rounded-2xl border">
+      <View className="w-full mx-auto max-w-md border-[#1F2937] bg-[#111827] mt-10 p-6 rounded-2xl border">
 
         <Text className="text-white text-xl font-semibold mb-6">
           Entrar
@@ -106,6 +109,7 @@ export default function Login() {
         </TouchableOpacity>
 
       </View>
+      </ScrollView>
     </View>
   );
 }

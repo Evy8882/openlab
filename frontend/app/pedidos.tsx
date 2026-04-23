@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  ScrollView,
 } from "react-native";
 import { useRouter } from "expo-router";
 import { getItem } from "@/utils/Storage";
@@ -56,15 +57,17 @@ export default function Pedidos() {
   }
 
   return (
-    <View className="flex-1 bg-[#0e0e0e] items-center justify-center px-4">
+    <View className="flex-1">
+    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 40 }}>
       <Image
         source={require("../assets/images/openlab-logo.png")}
         style={{ width: 220, height: 80 }}
         resizeMode="contain"
+        className="mx-auto"
       />
 
       {/* Card */}
-      <View className="w-full max-w-md border-[#1F2937] bg-[#111827] p-6 rounded-2xl border">
+      <View className="w-full border-[#1F2937] bg-[#111827] p-6 rounded-2xl border">
         <Text className="text-white text-xl font-semibold mb-6">
           Solicitar um Pedido
         </Text>
@@ -112,7 +115,8 @@ export default function Pedidos() {
           </Text>
         </TouchableOpacity>
       </View>
+    </ScrollView>
       <Footer />
-    </View>
+      </View>
   );
 }
