@@ -6,7 +6,8 @@ import {
   TouchableOpacity,
   Image,
   Alert,
-  ScrollView
+  ScrollView,
+  ActivityIndicator
 } from "react-native";
 import { useRouter } from "expo-router";
 import { saveItem } from "@/utils/Storage";
@@ -16,34 +17,43 @@ import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 export default function Login() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleLogin = async () => {
+    if (loading) return;
+
     if (!email || !senha) {
       Alert.alert("Erro", "Preencha todos os campos!");
       return;
     }
-    
-    const response = await fetch("http://localhost:3000/login", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json"
-      },
-      body: JSON.stringify({ email, senha })
-    });
 
-    
-    const data = await response.json();
-    
-    if (!response.ok) {
-      Alert.alert("Erro", data.erro || "Erro ao fazer login");
-      return;
+    setLoading(true);
+    try {
+      const response = await fetch("http://localhost:3000/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({ email, senha })
+      });
+
+      const data = await response.json();
+
+      if (!response.ok) {
+        Alert.alert("Erro", data.erro || "Erro ao fazer login");
+        return;
+      }
+      console.log("Usuário logado:", data);
+
+      await saveItem("token", {token: data.token});
+      await saveItem("user", data.data);
+      router.push("/");
+    } catch {
+      Alert.alert("Erro", "Não foi possível conectar ao servidor");
+    } finally {
+      setLoading(false);
     }
-    console.log("Usuário logado:", data);
-
-    await saveItem("token", {token: data.token});
-    await saveItem("user", data.data);
-    router.push("/");
   };
 
   return (
@@ -101,11 +111,21 @@ export default function Login() {
         {/* Botão */}
         <TouchableOpacity
           onPress={handleLogin}
-          className="bg-cyan-500 p-3 rounded-lg"
+          disabled={loading}
+          className={`p-3 rounded-lg ${loading ? "bg-cyan-700" : "bg-cyan-500"}`}
         >
-          <Text className="text-center text-black font-semibold">
-            Entrar
-          </Text>
+          {loading ? (
+            <View className="flex-row items-center justify-center gap-2">
+              <ActivityIndicator size="small" color="#000" />
+              <Text className="text-center text-black font-semibold">
+                Entrando...
+              </Text>
+            </View>
+          ) : (
+            <Text className="text-center text-black font-semibold">
+              Entrar
+            </Text>
+          )}
         </TouchableOpacity>
 
         {/* Redirecionamento para cadastro */}

@@ -3,12 +3,19 @@ import bcrypt from "bcryptjs"
 
 export async function CadastrarUsuario(req: any, res: any) {
     try {
-        const { nome, email, senha, tipo } = req.body
+        const { nome, email, senha, tipo, codigo } = req.body
     
         // Verifica se já existe
         const existe = await Usuario.findOne({ email })
         if (existe) {
           return res.status(400).json({ erro: 'Email já cadastrado' })
+        }
+
+        if (tipo === "monitor") {
+          // Código provisório -> Alterar automáticamente semanalmente quando em produção
+          if (codigo !== "MONITOR2026") {
+            return res.status(400).json({ erro: 'Código de monitor inválido' })
+          }
         }
     
         // Criptografa senha

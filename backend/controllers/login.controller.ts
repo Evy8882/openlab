@@ -19,7 +19,7 @@ export async function LoginUsuario(req: any, res: any) {
 
     const token = jwt.sign({ id: usuario._id }, process.env.JWT_SECRET as string, { expiresIn: '8h' })
 
-    res.json({ mensagem: 'Login realizado com sucesso', token, data: {"nome": usuario.nome, "email": usuario.email} })
+    res.json({ mensagem: 'Login realizado com sucesso', token, data: {"nome": usuario.nome, "email": usuario.email, "tipo": usuario.tipo} })
 
   } catch (err) {
     console.log(err)
