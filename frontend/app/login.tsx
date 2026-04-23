@@ -8,28 +8,30 @@ import {
   Alert,
 } from "react-native";
 import { useRouter } from "expo-router";
+import { saveItem } from "@/utils/Storage";
 
 export default function Login() {
-  const [tipo, setTipo] = useState<"aluno" | "professor">("aluno");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
-  const [codigo, setCodigo] = useState("");
   const router = useRouter();
 
-  const handleLogin = () => {
+  const handleLogin = async () => {
     if (!email || !senha) {
       Alert.alert("Erro", "Preencha todos os campos!");
       return;
     }
-
-    console.log({
+    // Simulação de login:
+    // Ainda deve ser implementado com o backend
+    const userData = {
+      nome: email.split("@")[0],
       email,
-      senha,
-      tipo,
-      codigo: tipo === "professor" ? codigo : null,
-    });
+      tipo: "aluno",
+    };
+    
+    console.log("Usuário logado:", userData);
 
-    Alert.alert("Sucesso", "Login realizado!");
+    await saveItem("user", userData);
+    router.push("/");
   };
 
   return (

@@ -9,7 +9,7 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Footer from "../components/Footer";
-import { getItem } from "@/utils/Storage";
+import { getItem, removeItem, saveItem } from "@/utils/Storage";
 import { useRouter } from "expo-router";
 
 export default function Perfil() {
@@ -44,7 +44,7 @@ export default function Perfil() {
 
   const salvarEdicao = () => {
     setEditando(false);
-    Alert.alert("Sucesso", "Perfil atualizado!");
+    saveItem("user", usuario);
   };
 
   useEffect(() => {
@@ -53,10 +53,16 @@ export default function Perfil() {
       if (!user) {
         router.push("/login");
       }
+      setUsuario(user);
     };
     checkUser();
     setLoading(false);
   }, []);
+
+  function logOut() {
+    removeItem("user");
+    router.push("/login");
+  }
 
   if (loading) {
     return (
@@ -129,7 +135,7 @@ export default function Perfil() {
         </TouchableOpacity>
 
         {/* BOTÃO SAIR */}
-        <TouchableOpacity className="bg-red-500 p-3 rounded-lg">
+        <TouchableOpacity className="bg-red-500 p-3 rounded-lg" onPress={logOut}>
           <Text className="text-center text-white font-semibold">Sair</Text>
         </TouchableOpacity>
       </View>
