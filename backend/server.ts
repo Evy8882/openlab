@@ -1,44 +1,23 @@
 import express from 'express'
 import mongoose from 'mongoose'
 import bcrypt from 'bcryptjs'
-import Usuario from './models/usuario.js'
+import Usuario from './models/usuario.model.js'
+
+import { CadastrarUsuario } from './controllers/cadastro.controller.js'
 
 const app = express()
 app.use(express.json())
 
 // 🔗 Conexão com MongoDB
-mongoose.connect('mongodb://127.0.0.1:27017/meubanco')
+mongoose.connect(process.env.MONGO_URI || "")
   .then(() => console.log('MongoDB conectado'))
-  .catch(err => console.log(err))
+  .catch(err => {
+    console.log(err)
+    process.exit(1)
+  })
 
 // 📌 Rota de cadastro
-app.post('/cadastro', async (req, res) => {
-  try {
-    const { nome, email, senha } = req.body
-
-    // Verifica se já existe
-    const existe = await Usuario.findOne({ email })
-    if (existe) {
-      return res.status(400).json({ erro: 'Email já cadastrado' })
-    }
-
-    // Criptografa senha
-    const senhaHash = await bcrypt.hash(senha, 10)
-
-    const novoUsuario = new Usuario({
-      nome,
-      email,
-      senha: senhaHash
-    })
-
-    await novoUsuario.save()
-
-    res.json({ mensagem: 'Usuário cadastrado com sucesso' })
-
-  } catch (err) {
-    res.status(500).json({ erro: 'Erro no servidor' })
-  }
-})
+app.post('/cadastro', CadastrarUsuario)
 
 // 🔐 Rota de login
 app.post('/login', async (req, res) => {
