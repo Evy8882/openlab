@@ -1,9 +1,9 @@
-import Usuario from "../models/usuario.model.js"
+import Usuario from "../models/usuario.model.ts"
 import bcrypt from "bcryptjs"
 
 export async function CadastrarUsuario(req: any, res: any) {
     try {
-        const { nome, email, senha } = req.body
+        const { nome, email, senha, tipo } = req.body
     
         // Verifica se já existe
         const existe = await Usuario.findOne({ email })
@@ -17,7 +17,8 @@ export async function CadastrarUsuario(req: any, res: any) {
         const novoUsuario = new Usuario({
           nome,
           email,
-          senha: senhaHash
+          senha: senhaHash,
+          tipo
         })
     
         await novoUsuario.save()

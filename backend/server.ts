@@ -1,45 +1,44 @@
 import express from 'express'
 import mongoose from 'mongoose'
-import bcrypt from 'bcryptjs'
-import Usuario from './models/usuario.model.js'
+import dotenv from 'dotenv'
+import cors from 'cors'
+dotenv.config()
 
-import { CadastrarUsuario } from './controllers/cadastro.controller.js'
+import { CadastrarUsuario } from './controllers/cadastro.controller.ts'
 
 const app = express()
+app.use(cors())
 app.use(express.json())
 
-// 🔗 Conexão com MongoDB
-mongoose.connect(process.env.MONGO_URI || "")
-  .then(() => console.log('MongoDB conectado'))
-  .catch(err => {
-    console.log(err)
-    process.exit(1)
-  })
+// Conexão com MongoDB
+// console.log("URI: " + process.env.MONGO_URI)
 
-// 📌 Rota de cadastro
-app.post('/cadastro', CadastrarUsuario)
-
-// 🔐 Rota de login
-app.post('/login', async (req, res) => {
+async function conectarDB() {
   try {
-    const { email, senha } = req.body
-
-    const usuario = await Usuario.findOne({ email })
-    if (!usuario) {
-      return res.status(400).json({ erro: 'Usuário não encontrado' })
+    if (!process.env.MONGO_URI) {
+      throw new Error("MONGO_URI não definida")
     }
 
-    const senhaValida = await bcrypt.compare(senha, usuario.senha)
-
-    if (!senhaValida) {
-      return res.status(400).json({ erro: 'Senha incorreta' })
-    }
-
-    res.json({ mensagem: 'Login realizado com sucesso' })
+    await mongoose.connect(process.env.MONGO_URI)
+    console.log("MongoDB conectado")
 
   } catch (err) {
-    res.status(500).json({ erro: 'Erro no servidor' })
+    console.error("Erro ao conectar:", err)
+    process.exit(1)
   }
+}
+
+conectarDB()
+
+app.get('/', (req: any, res: any) => {
+  res.json({ mensagem: 'Teste realizado com sucesso' })
+})
+
+// Rota de cadastro
+app.post('/cadastro', CadastrarUsuario)
+
+// Rota de login
+app.post('/login', async (req: any, res: any) => {
 })
 
 // ▶️ Inicia servidor

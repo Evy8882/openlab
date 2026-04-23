@@ -18,7 +18,7 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 
 export default function Cadastro() {
-  const [tipo, setTipo] = useState<"aluno" | "professor">("aluno");
+  const [tipo, setTipo] = useState<"aluno" | "monitor">("aluno");
   const [nome, setNome] = useState("");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
@@ -26,21 +26,31 @@ export default function Cadastro() {
   const [codigo, setCodigo] = useState("");
   const router = useRouter();
 
-  const handleSubmit = () => {
+  const handleSubmit = async () => {
     if (senha !== confirmarSenha) {
       Alert.alert("Erro", "As senhas não coincidem!");
       return;
     }
 
-    console.log({
-      nome,
-      email,
-      senha,
-      tipo,
-      codigo: tipo === "professor" ? codigo : null,
+    await fetch("http://localhost:3000/cadastro", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        nome,
+        email,
+        senha,
+        tipo,
+        codigo: tipo === "monitor" ? codigo : undefined,
+      }),
+    })
+    .then(()=>{
+      router.push("/login");
+    })
+    .catch((err) => {
+      console.error(err);
     });
-
-    Alert.alert("Sucesso", "Cadastro realizado!");
   };
 
   return (
@@ -74,9 +84,9 @@ export default function Cadastro() {
           </TouchableOpacity>
 
           <TouchableOpacity
-            onPress={() => setTipo("professor")}
+            onPress={() => setTipo("monitor")}
             className={`flex-1 p-2 rounded-lg ${
-              tipo === "professor" ? "bg-cyan-500" : ""
+              tipo === "monitor" ? "bg-cyan-500" : ""
             }`}
           >
             <Text className="text-center text-white">Professor/Monitor</Text>
@@ -120,7 +130,7 @@ export default function Cadastro() {
         </View>
 
         {/* Uma chave unica, que é gerada semanalmente e apenas divulgada para os prefessores e monitores */}
-        {tipo === "professor" && (
+        {tipo === "monitor" && (
           <>
             <Text className="text-white mb-1">Código de acesso</Text>
             <View className="relative mb-4">
