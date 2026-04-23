@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import { useRouter } from "expo-router";
 import { saveItem } from "@/utils/Storage";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import { faEnvelope, faLock } from "@fortawesome/free-solid-svg-icons";
 
 export default function Login() {
   const [email, setEmail] = useState("");
@@ -52,25 +54,37 @@ export default function Login() {
         </Text>
 
         {/* Email */}
-        <Text className="text-white mb-1">Email</Text>
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          placeholder="seuemail@email.com"
-          placeholderTextColor="#64748b"
-          className="bg-black border border-gray-700 text-white p-3 rounded-lg mb-4"
-        />
+        <Text className="text-gray-200 mb-1">Email</Text>
+        <View className="relative mb-4">
+          <View className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+            <FontAwesomeIcon icon={faEnvelope} size={16} color="#38bdf8" />
+          </View>
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            placeholder="seuemail@email.com"
+            placeholderTextColor="#64748b"
+            keyboardType="email-address"
+            autoCapitalize="none"
+            className="bg-[#0f121a] border border-gray-700/80 text-white p-3 pl-10 rounded-xl"
+          />
+        </View>
 
         {/* Senha */}
-        <Text className="text-white mb-1">Senha</Text>
-        <TextInput
-          value={senha}
-          onChangeText={setSenha}
-          secureTextEntry
-          placeholder="********"
-          placeholderTextColor="#64748b"
-          className="bg-black border border-gray-700 text-white p-3 rounded-lg mb-6"
-        />
+        <Text className="text-gray-200 mb-1">Senha</Text>
+        <View className="relative mb-6">
+          <View className="absolute left-3 top-1/2 -translate-y-1/2 z-10">
+            <FontAwesomeIcon icon={faLock} size={16} color="#38bdf8" />
+          </View>
+          <TextInput
+            value={senha}
+            onChangeText={setSenha}
+            secureTextEntry
+            placeholder="••••••••"
+            placeholderTextColor="#64748b"
+            className="bg-[#0f121a] border border-gray-700/80 text-white p-3 pl-10 rounded-xl"
+          />
+        </View>
 
         {/* Botão */}
         <TouchableOpacity
