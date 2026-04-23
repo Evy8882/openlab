@@ -25,6 +25,7 @@ export default function Index() {
   });
   const [loading, setLoading] = useState(true);
   const router = useRouter();
+  const [labs, setLabs] = useState<Array<Lab>>([]);
 
   function handleCardPress(lab: Lab) {
     setMenuData({
@@ -57,15 +58,25 @@ export default function Index() {
     responsible?: string;
   }
 
-  const labs: Lab[] = [
-    { name: "Lab 1", status: "Disponível agora", responsible: "Rafael D'Angelo" },
-    { name: "Lab 2", status: "Indisponível" },
-    { name: "Lab 3", status: "Em aula", responsible: "Iury Silva" },
-    { name: "Lab 4", status: "Disponível agora", responsible: "Fillipe" },
-    { name: "Lab 5", status: "Indisponível" },
-    { name: "Pranchetário 1", status: "Disponível agora", responsible: "Everton" },
-    { name: "Pranchetário 2", status: "Em aula", responsible: "Sônia" },
-  ]
+  useEffect(() => {
+    const loadLabs = async () => {
+      let labs: Lab[] = await getItem("labs");
+      if (!labs) {
+        labs = [
+          { name: "Lab 1", status: "Disponível agora", responsible: "Rafael D'Angelo" },
+          { name: "Lab 2", status: "Indisponível" },
+          { name: "Lab 3", status: "Em aula", responsible: "Iury Silva" },
+          { name: "Lab 4", status: "Disponível agora", responsible: "Fillipe" },
+          { name: "Lab 5", status: "Indisponível" },
+          { name: "Pranchetário 1", status: "Disponível agora", responsible: "Everton" },
+          { name: "Pranchetário 2", status: "Em aula", responsible: "Sônia" },
+        ];
+      }
+      setLabs(labs);
+    };
+
+    loadLabs();
+  }, []);
 
   const filteredLabs = labs.filter((lab) => {
     const isPranchetario = lab.name.toLowerCase().includes("pranchetário");
