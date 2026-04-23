@@ -7,12 +7,14 @@ import {
   Image,
   Alert,
 } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function Login() {
   const [tipo, setTipo] = useState<"aluno" | "professor">("aluno");
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [codigo, setCodigo] = useState("");
+  const router = useRouter();
 
   const handleLogin = () => {
     if (!email || !senha) {
@@ -31,7 +33,7 @@ export default function Login() {
   };
 
   return (
-    <View className="flex-1 bg-black items-center justify-center px-4">
+    <View className="flex-1 bg-[#0e0e0e] items-center justify-center px-4">
 
       {/* Logo */}
       <Image
@@ -41,7 +43,7 @@ export default function Login() {
       />
 
       {/* Card */}
-      <View className="w-full max-w-md bg-[#020617] mt-10 p-6 rounded-2xl border border-white/10">
+      <View className="w-full max-w-md border-[#1F2937] bg-[#111827] mt-10 p-6 rounded-2xl border">
 
         <Text className="text-white text-xl font-semibold mb-6">
           Entrar
@@ -98,6 +100,15 @@ export default function Login() {
         >
           <Text className="text-center text-black font-semibold">
             Entrar
+          </Text>
+        </TouchableOpacity>
+
+        {/* Redirecionamento para cadastro */}
+        <TouchableOpacity className="mt-4" onPress={()=>{
+          router.push("/cadastro");
+        }}>
+          <Text className="text-cyan-400 text-center">
+            Não tem uma conta? Cadastre-se
           </Text>
         </TouchableOpacity>
 

@@ -33,7 +33,7 @@ export default function Pedidos() {
   };
 
   return (
-    <View className="flex-1 bg-black items-center justify-center px-4">
+    <View className="flex-1 bg-[#0e0e0e] items-center justify-center px-4">
 
  <Image
         source={require("../assets/images/openlab-logo.png")}
@@ -42,7 +42,7 @@ export default function Pedidos() {
       />
 
       {/* Card */}
-      <View className="w-full max-w-md bg-[#020617] p-6 rounded-2xl border border-white/10">
+      <View className="w-full max-w-md border-[#1F2937] bg-[#111827] p-6 rounded-2xl border">
 
         <Text className="text-white text-xl font-semibold mb-6">
           Solicitar um Pedido

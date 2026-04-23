@@ -45,7 +45,7 @@ export default function Perfil() {
   };
 
   return (
-    <View className="flex-1 bg-black items-center px-4 pt-16">
+    <View className="flex-1 bg-[#0e0e0e] items-center px-4 pt-16">
 
       {/* FOTO */}
       <TouchableOpacity onPress={escolherFoto}>
@@ -94,7 +94,7 @@ export default function Perfil() {
       </View>
 
       {/* CARD */}
-      <View className="w-full max-w-md bg-[#020617] p-6 rounded-2xl border border-white/10">
+      <View className="w-full max-w-md border-[#1F2937] bg-[#111827] p-6 rounded-2xl border">
 
         <Text className="text-gray-400 mb-1">Email</Text>
 

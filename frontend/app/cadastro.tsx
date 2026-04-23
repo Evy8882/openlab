@@ -7,6 +7,7 @@ import {
   Image,
   Alert,
 } from "react-native";
+import { useRouter } from "expo-router";
 
 export default function Cadastro() {
   const [tipo, setTipo] = useState<"aluno" | "professor">("aluno");
@@ -15,6 +16,7 @@ export default function Cadastro() {
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
   const [codigo, setCodigo] = useState("");
+  const router = useRouter();
 
   const handleSubmit = () => {
     if (senha !== confirmarSenha) {
@@ -34,7 +36,7 @@ export default function Cadastro() {
   };
 
   return (
-    <View className="flex-1 bg-black items-center justify-center px-4">
+    <View className="flex-1 bg-[#0e0e0e] items-center justify-center px-4">
 
       {/* Logo */}
       <Image
@@ -44,7 +46,7 @@ export default function Cadastro() {
       />
 
       {/* Card */}
-      <View className="w-full max-w-md bg-[#020617] mt-10 p-6 rounded-2xl border border-white/10">
+      <View className="w-full max-w-md border-[#1F2937] bg-[#111827] mt-10 p-6 rounded-2xl border">
 
         <Text className="text-white text-xl font-semibold mb-6">
           Criar Conta
@@ -134,6 +136,15 @@ export default function Cadastro() {
         >
           <Text className="text-center text-black font-semibold">
             Cadastrar
+          </Text>
+        </TouchableOpacity>
+
+        {/* Redirecionamento para login */}
+        <TouchableOpacity className="mt-4" onPress={() => {
+          router.push("/login");
+        }}>
+          <Text className="text-cyan-400 text-center">
+            Já tem uma conta? Faça login
           </Text>
         </TouchableOpacity>
 
