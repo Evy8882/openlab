@@ -49,29 +49,6 @@ export default function Login() {
           Entrar
         </Text>
 
-        {/* Tipo */}
-        <View className="flex-row mb-6 bg-black rounded-xl p-1">
-          <TouchableOpacity
-            onPress={() => setTipo("aluno")}
-            className={`flex-1 p-2 rounded-lg ${
-              tipo === "aluno" ? "bg-cyan-500" : ""
-            }`}
-          >
-            <Text className="text-center text-white">Aluno</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity
-            onPress={() => setTipo("professor")}
-            className={`flex-1 p-2 rounded-lg ${
-              tipo === "professor" ? "bg-cyan-500" : ""
-            }`}
-          >
-            <Text className="text-center text-white">
-              Professor/Monitor
-            </Text>
-          </TouchableOpacity>
-        </View>
-
         {/* Email */}
         <Text className="text-white mb-1">Email</Text>
         <TextInput
