@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   View,
   Text,
@@ -9,16 +9,19 @@ import {
 } from "react-native";
 import * as ImagePicker from "expo-image-picker";
 import Footer from "../components/Footer";
+import { getItem } from "@/utils/Storage";
+import { useRouter } from "expo-router";
 
 export default function Perfil() {
   const [foto, setFoto] = useState<string | null>(null);
   const [editando, setEditando] = useState(false);
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const [usuario, setUsuario] = useState({
     nome: "",
     email: "",
     tipo: "aluno", // Ou Monitor/Professor
-    
   });
 
   const escolherFoto = async () => {
@@ -44,16 +47,32 @@ export default function Perfil() {
     Alert.alert("Sucesso", "Perfil atualizado!");
   };
 
+  useEffect(() => {
+    const checkUser = async () => {
+      const user = await getItem("user");
+      if (!user) {
+        router.push("/login");
+      }
+    };
+    checkUser();
+    setLoading(false);
+  }, []);
+
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-[#0e0e0e]">
+        <Text className="text-white text-lg">Carregando...</Text>
+      </View>
+    );
+  }
+
   return (
     <View className="flex-1 bg-[#0e0e0e] items-center px-4 pt-16">
-
       {/* FOTO */}
       <TouchableOpacity onPress={escolherFoto}>
         <Image
           source={
-            foto
-              ? { uri: foto }
-              : require("../assets/images/openlab-logo.png")
+            foto ? { uri: foto } : require("../assets/images/openlab-logo.png")
           }
           style={{
             width: 120,
@@ -65,51 +84,38 @@ export default function Perfil() {
         />
       </TouchableOpacity>
 
-      <Text className="text-gray-400 mt-2 mb-4">
-        Toque para alterar foto
-      </Text>
+      <Text className="text-gray-400 mt-2 mb-4">Toque para alterar foto</Text>
 
       {/* NOME */}
       {editando ? (
         <TextInput
           value={usuario.nome}
-          onChangeText={(text) =>
-            setUsuario({ ...usuario, nome: text })
-          }
+          onChangeText={(text) => setUsuario({ ...usuario, nome: text })}
           className="text-white text-2xl font-bold border-b border-cyan-400 mb-2 text-center"
         />
       ) : (
-        <Text className="text-white text-2xl font-bold">
-          {usuario.nome}
-        </Text>
+        <Text className="text-white text-2xl font-bold">{usuario.nome}</Text>
       )}
 
       {/* TIPO */}
       <View className="mt-2 mb-6 px-4 py-1 rounded-full bg-cyan-500/20 border border-cyan-400">
         <Text className="text-cyan-400 text-sm">
-          {usuario.tipo === "professor"
-            ? "Professor / Monitor"
-            : "Aluno"}
+          {usuario.tipo === "professor" ? "Professor / Monitor" : "Aluno"}
         </Text>
       </View>
 
       {/* CARD */}
       <View className="w-full max-w-md border-[#1F2937] bg-[#111827] p-6 rounded-2xl border">
-
         <Text className="text-gray-400 mb-1">Email</Text>
 
         {editando ? (
           <TextInput
             value={usuario.email}
-            onChangeText={(text) =>
-              setUsuario({ ...usuario, email: text })
-            }
+            onChangeText={(text) => setUsuario({ ...usuario, email: text })}
             className="text-white text-lg mb-6 border-b border-cyan-400"
           />
         ) : (
-          <Text className="text-white text-lg mb-6">
-            {usuario.email}
-          </Text>
+          <Text className="text-white text-lg mb-6">{usuario.email}</Text>
         )}
 
         {/* BOTÃO EDITAR / SALVAR */}
@@ -124,11 +130,8 @@ export default function Perfil() {
 
         {/* BOTÃO SAIR */}
         <TouchableOpacity className="bg-red-500 p-3 rounded-lg">
-          <Text className="text-center text-white font-semibold">
-            Sair
-          </Text>
+          <Text className="text-center text-white font-semibold">Sair</Text>
         </TouchableOpacity>
-
       </View>
 
       <Footer />

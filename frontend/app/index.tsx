@@ -1,8 +1,10 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Image, Text, ScrollView, View, Pressable } from "react-native";
 import LabCard from "../components/LabCard";
 import Footer from "@/components/Footer";
 import LabMenu from "@/components/LabMenu";
+import { getItem } from "@/utils/Storage";
+import { useRouter } from "expo-router";
 const image = require("../assets/images/openlab-logo.png");
 
 export default function Index() {
@@ -21,6 +23,8 @@ export default function Index() {
     labStatus: "Disponível agora" as "Disponível agora" | "Indisponível" | "Em aula",
     labResponsible: "",
   });
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   function handleCardPress(lab: Lab) {
     setMenuData({
@@ -34,6 +38,17 @@ export default function Index() {
   function handleCloseMenu() {
     setIsMenuOpened(false);
   }
+  
+  useEffect(() => {
+    const checkUser = async () => {
+      const user = await getItem("user");
+      if (!user) {
+        router.push("/login");
+      }
+    };
+    checkUser();
+    setLoading(false);
+  }, []);
 
   type LabStatus = "Disponível agora" | "Indisponível" | "Em aula";
   interface Lab {
@@ -59,6 +74,14 @@ export default function Index() {
     if (selectedCategory === "Laboratórios") return !isPranchetario;
     return isPranchetario;
   });
+
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-[#0e0e0e]">
+        <Text className="text-white text-lg">Carregando...</Text>
+      </View>
+    )
+  }
 
   return (
     <View className="flex-1">
