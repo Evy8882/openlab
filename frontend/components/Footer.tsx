@@ -16,20 +16,27 @@ export default function Footer() {
                 elevation: 10,
             }}
         >
-            <View className="flex-row items-center justify-around">
+                
+                <View className="flex-row items-center justify-around">
+
+                     <Link href="/" asChild>
                 <TouchableOpacity className="flex-col items-center">
                     <FontAwesomeIcon icon={faHome} size={20} color="#F8FAFC" />
                     <Text className="mt-1 text-[12px] text-slate-100">Home</Text>
                 </TouchableOpacity>
+                </Link>
+                <Link href="/pedidos" asChild>
                 <TouchableOpacity className="flex-col items-center">
                     <FontAwesomeIcon icon={faHandPointUp} size={20} color="#F8FAFC" />
                     <Text className="mt-1 text-[12px] text-slate-100">Pedidos</Text>
                 </TouchableOpacity>
+                 </Link>
+                 <Link href="/perfil" asChild>
                 <TouchableOpacity className="flex-col items-center">
                     <FontAwesomeIcon icon={faUser} size={20} color="#F8FAFC" />
                     <Text className="mt-1 text-[12px] text-slate-100">Perfil</Text>
                 </TouchableOpacity>
-
+            </Link>
             </View>
         </View>
     );
