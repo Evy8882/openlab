@@ -1,0 +1,26 @@
+{
+  "name": "openlab-main",
+  "version": "1.0.0",
+  "description": "<img height=\"200\" src=\"./frontend/assets/images/openlab-logo.png\" alt=\"OpenLab preview\" />",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "dev": "ts-node server.ts"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "bcryptjs": "^3.0.3",
+    "express": "^5.2.1",
+    "mongodb": "^7.2.0",
+    "mongoose": "^9.5.0"
+  },
+  "devDependencies": {
+    "@types/express": "^5.0.6",
+    "@types/node": "^25.6.0",
+    "ts-node": "^10.9.2",
+    "typescript": "^6.0.3"
+  }
+}
