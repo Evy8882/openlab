@@ -55,7 +55,7 @@ export default function Cadastro() {
 
   return (
     <View className="flex-1">
-    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 20 }}>
+    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 20, paddingTop: 180 }}>
 
       {/* Logo */}
       <Image

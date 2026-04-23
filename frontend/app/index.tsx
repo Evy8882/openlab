@@ -63,7 +63,7 @@ export default function Index() {
       let labs: Lab[] = await getItem("labs");
       if (!labs) {
         labs = [
-          { name: "Lab 1", status: "Disponível agora", responsible: "Rafael D'Angelo" },
+          { name: "Lab 1", status: "Disponível agora", responsible: "Rafael" },
           { name: "Lab 2", status: "Indisponível" },
           { name: "Lab 3", status: "Em aula", responsible: "Iury Silva" },
           { name: "Lab 4", status: "Disponível agora", responsible: "Fillipe" },

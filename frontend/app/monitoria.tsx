@@ -42,7 +42,7 @@ export default function Monitoria() {
           {
             name: "Lab 1",
             status: "Disponível agora",
-            responsible: "Rafael D'Angelo",
+            responsible: "Rafael",
           },
           { name: "Lab 2", status: "Indisponível" },
           { name: "Lab 3", status: "Em aula", responsible: "Iury Silva" },
@@ -91,7 +91,7 @@ export default function Monitoria() {
     <View className="flex-1 bg-[#0b0b0d]">
       <ScrollView
         className="flex-1"
-        contentContainerStyle={{ padding: 20, paddingBottom: 120 }}
+        contentContainerStyle={{ padding: 20, paddingBottom: 160, paddingTop: 130 }}
         showsVerticalScrollIndicator={false}
       >
         <View className="mb-5 rounded-2xl border border-[#2a2a32] bg-[#15151a] p-5">
@@ -163,7 +163,7 @@ export default function Monitoria() {
                   onPress={() => updateLabStatus(lab.name, "Indisponível")}
                   className="bg-rose-700 rounded-lg py-1.5 px-2.5"
                 >
-                  <Text className="text-white text-center text-xs font-medium">Indisponível</Text>
+                  <Text className="text-white text-center text-xs font-medium">Fora de uso</Text>
                 </TouchableOpacity>
               )}
             </View>
