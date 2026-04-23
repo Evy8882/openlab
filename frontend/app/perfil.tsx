@@ -75,7 +75,7 @@ export default function Perfil() {
 
   return (
     <View className="flex-1">
-    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 40 }}>
+    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 40, paddingTop: 180 }}>
       {/* FOTO */}
       <TouchableOpacity onPress={escolherFoto}>
         <Image

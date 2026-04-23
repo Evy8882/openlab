@@ -96,7 +96,7 @@ export default function Index() {
 
   return (
     <View className="flex-1">
-    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ paddingBottom: 40 }}>
+    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ paddingBottom: 180, paddingTop: 40 }}>
 
       {/* homepage header */}
       <View className="items-center justify-center px-5 pb-6 pt-6">

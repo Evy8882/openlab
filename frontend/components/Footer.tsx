@@ -7,7 +7,7 @@ export default function Footer() {
     return (
         // navbar
         <View
-            className="absolute bottom-4 w-[88%] self-center rounded-2xl border border-white/20 bg-black/80 px-5 py-4"
+            className="absolute bottom-16 w-[88%] self-center rounded-2xl border border-white/20 bg-black/80 px-5 py-4"
             style={{
                 shadowColor: '#000',
                 shadowOffset: { width: 0, height: 8 },

@@ -32,7 +32,7 @@ export default function Cadastro() {
       return;
     }
 
-    await fetch("http://localhost:3000/cadastro", {
+    await fetch("http://192.168.0.11:3000/cadastro", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",

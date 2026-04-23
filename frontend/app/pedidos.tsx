@@ -58,7 +58,7 @@ export default function Pedidos() {
 
   return (
     <View className="flex-1">
-    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 40 }}>
+    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 40, paddingBottom: 180, paddingTop: 180 }}>
       <Image
         source={require("../assets/images/openlab-logo.png")}
         style={{ width: 220, height: 80 }}
