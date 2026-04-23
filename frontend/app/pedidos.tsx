@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Footer from "../components/Footer";
 import {
   View,
@@ -7,12 +7,17 @@ import {
   TouchableOpacity,
   Alert,
   Image,
+  ScrollView,
 } from "react-native";
+import { useRouter } from "expo-router";
+import { getItem } from "@/utils/Storage";
 
 export default function Pedidos() {
   const [necessidade, setNecessidade] = useState("");
   const [data, setData] = useState("");
   const [hora, setHora] = useState("");
+  const [loading, setLoading] = useState(true);
+  const router = useRouter();
 
   const handleSubmit = () => {
     if (!necessidade || !data || !hora) {
@@ -24,7 +29,7 @@ export default function Pedidos() {
 
     Alert.alert(
       "Pedido enviado",
-      "Entraremos em contato para verificar a disponibilidade."
+      "Entraremos em contato para verificar a disponibilidade.",
     );
 
     setNecessidade("");
@@ -32,18 +37,37 @@ export default function Pedidos() {
     setHora("");
   };
 
-  return (
-    <View className="flex-1 bg-[#0e0e0e] items-center justify-center px-4">
+  useEffect(() => {
+    const checkUser = async () => {
+      const user = await getItem("user");
+      if (!user) {
+        router.push("/login");
+      }
+    };
+    checkUser();
+    setLoading(false);
+  }, []);
 
- <Image
+  if (loading) {
+    return (
+      <View className="flex-1 items-center justify-center bg-[#0e0e0e]">
+        <Text className="text-white text-lg">Carregando...</Text>
+      </View>
+    );
+  }
+
+  return (
+    <View className="flex-1">
+    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 40 }}>
+      <Image
         source={require("../assets/images/openlab-logo.png")}
         style={{ width: 220, height: 80 }}
         resizeMode="contain"
+        className="mx-auto"
       />
 
       {/* Card */}
-      <View className="w-full max-w-md border-[#1F2937] bg-[#111827] p-6 rounded-2xl border">
-
+      <View className="w-full border-[#1F2937] bg-[#111827] p-6 rounded-2xl border">
         <Text className="text-white text-xl font-semibold mb-6">
           Solicitar um Pedido
         </Text>
@@ -90,10 +114,9 @@ export default function Pedidos() {
             Enviar Pedido
           </Text>
         </TouchableOpacity>
-
       </View>
+    </ScrollView>
       <Footer />
-    </View>
+      </View>
   );
-  
 }

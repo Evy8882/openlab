@@ -6,8 +6,16 @@ import {
   TouchableOpacity,
   Image,
   Alert,
+  ScrollView
 } from "react-native";
 import { useRouter } from "expo-router";
+import { FontAwesomeIcon } from "@fortawesome/react-native-fontawesome";
+import {
+  faUser,
+  faEnvelope,
+  faKey,
+  faLock,
+} from "@fortawesome/free-solid-svg-icons";
 
 export default function Cadastro() {
   const [tipo, setTipo] = useState<"aluno" | "professor">("aluno");
@@ -36,17 +44,19 @@ export default function Cadastro() {
   };
 
   return (
-    <View className="flex-1 bg-[#0e0e0e] items-center justify-center px-4">
+    <View className="flex-1">
+    <ScrollView className="flex-1 bg-[#0e0e0e]" contentContainerStyle={{ padding: 20 }}>
 
       {/* Logo */}
       <Image
         source={require("../assets/images/openlab-logo.png")}
         style={{ width: 220, height: 80 }}
         resizeMode="contain"
+        className="mx-auto"
       />
 
       {/* Card */}
-      <View className="w-full max-w-md border-[#1F2937] bg-[#111827] mt-10 p-6 rounded-2xl border">
+      <View className="w-full mx-auto max-w-md border-[#1F2937] bg-[#111827] mt-10 p-6 rounded-2xl border">
 
         <Text className="text-white text-xl font-semibold mb-6">
           Criar Conta
@@ -75,59 +85,99 @@ export default function Cadastro() {
 
         {/* Nome */}
         <Text className="text-white mb-1">Nome</Text>
-        <TextInput
-          value={nome}
-          onChangeText={setNome}
-          placeholder="Seu nome"
-          placeholderTextColor="#64748b"
-          className="bg-black border border-gray-700 text-white p-3 rounded-lg mb-4"
-        />
+        <View className="relative mb-4">
+          <FontAwesomeIcon
+            icon={faUser}
+            size={16}
+            color="#64748b"
+            style={{ position: "absolute", left: 12, top: 13, zIndex: 1 }}
+          />
+          <TextInput
+            value={nome}
+            onChangeText={setNome}
+            placeholder="Seu nome"
+            placeholderTextColor="#64748b"
+            className="bg-[#0f121a] border border-gray-700 text-white p-3 rounded-xl pl-10"
+          />
+        </View>
 
         {/* Email */}
         <Text className="text-white mb-1">Email</Text>
-        <TextInput
-          value={email}
-          onChangeText={setEmail}
-          placeholder="seuemail@email.com"
-          placeholderTextColor="#64748b"
-          className="bg-black border border-gray-700 text-white p-3 rounded-lg mb-4"
-        />
+        <View className="relative mb-4">
+          <FontAwesomeIcon
+            icon={faEnvelope}
+            size={16}
+            color="#64748b"
+            style={{ position: "absolute", left: 12, top: 13, zIndex: 1 }}
+          />
+          <TextInput
+            value={email}
+            onChangeText={setEmail}
+            placeholder="seuemail@email.com"
+            placeholderTextColor="#64748b"
+            className="bg-[#0f121a] border border-gray-700 text-white p-3 rounded-xl pl-10"
+          />
+        </View>
 
         {/* Uma chave unica, que é gerada semanalmente e apenas divulgada para os prefessores e monitores */}
         {tipo === "professor" && (
           <>
             <Text className="text-white mb-1">Código de acesso</Text>
-            <TextInput
-              value={codigo}
-              onChangeText={setCodigo}
-              placeholder="Digite o código"
-              placeholderTextColor="#64748b"
-              className="bg-black border border-gray-700 text-white p-3 rounded-lg mb-4"
-            />
+            <View className="relative mb-4">
+              <FontAwesomeIcon
+                icon={faKey}
+                size={16}
+                color="#64748b"
+                style={{ position: "absolute", left: 12, top: 13, zIndex: 1 }}
+              />
+              <TextInput
+                value={codigo}
+                onChangeText={setCodigo}
+                placeholder="Digite o código"
+                placeholderTextColor="#64748b"
+                className="bg-[#0f121a] border border-gray-700 text-white p-3 rounded-xl pl-10"
+              />
+            </View>
           </>
         )}
 
         {/* Senha */}
         <Text className="text-white mb-1">Senha</Text>
-        <TextInput
-          value={senha}
-          onChangeText={setSenha}
-          secureTextEntry
-          placeholder="********"
-          placeholderTextColor="#64748b"
-          className="bg-black border border-gray-700 text-white p-3 rounded-lg mb-4"
-        />
+        <View className="relative mb-4">
+          <FontAwesomeIcon
+            icon={faLock}
+            size={16}
+            color="#64748b"
+            style={{ position: "absolute", left: 12, top: 13, zIndex: 1 }}
+          />
+          <TextInput
+            value={senha}
+            onChangeText={setSenha}
+            secureTextEntry
+            placeholder="••••••••"
+            placeholderTextColor="#64748b"
+            className="bg-[#0f121a] border border-gray-700 text-white p-3 rounded-xl pl-10"
+          />
+        </View>
 
         {/* Confirmar senha */}
         <Text className="text-white mb-1">Confirmar Senha</Text>
-        <TextInput
-          value={confirmarSenha}
-          onChangeText={setConfirmarSenha}
-          secureTextEntry
-          placeholder="********"
-          placeholderTextColor="#64748b"
-          className="bg-black border border-gray-700 text-white p-3 rounded-lg mb-6"
-        />
+        <View className="relative mb-6">
+          <FontAwesomeIcon
+            icon={faLock}
+            size={16}
+            color="#64748b"
+            style={{ position: "absolute", left: 12, top: 13, zIndex: 1 }}
+          />
+          <TextInput
+            value={confirmarSenha}
+            onChangeText={setConfirmarSenha}
+            secureTextEntry
+            placeholder="••••••••"
+            placeholderTextColor="#64748b"
+            className="bg-[#0f121a] border border-gray-700 text-white p-3 rounded-xl pl-10"
+          />
+        </View>
 
         {/* Botão */}
         <TouchableOpacity
@@ -149,6 +199,7 @@ export default function Cadastro() {
         </TouchableOpacity>
 
       </View>
+      </ScrollView>
     </View>
   );
 }
